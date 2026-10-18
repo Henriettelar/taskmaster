@@ -12,20 +12,23 @@ const taskPath = path.join(__dirname, './data/tasks.json');
 const status = require('./data/status.js');
 
 
-async function readTask(){
+async function readTasks(){
     return await fs.readJson(taskPath);
 }
 
 async function createTask(task){
-    await fs.writeJson(taskPath, task);
+    const tasks = await readTasks(task);
+    tasks.push(task);
+    return await fs.writeJson(taskPath, tasks);
 }
 
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.get('/api/tasks', async (req, res) => {
     try {
-        const tasks = await readTask();
+        const tasks = await readTasks();
         res.json(tasks);
     } catch (error) {
         res.status(404).send('Opgaver kunne ikke indlæses');
@@ -33,7 +36,7 @@ app.get('/api/tasks', async (req, res) => {
     }
 });
 
-app.post('/api/tasks', (req, res) => {
+app.post('/api/tasks', async(req, res) => {
     //Får input fra bruger
     const newTask = {
         id: crypto.randomUUID(),
@@ -46,7 +49,7 @@ app.post('/api/tasks', (req, res) => {
     }
 
     try {
-        createTask(newTask);
+        await createTask(newTask);
     } catch (error){
         res.status(500).send('Kunne ikke oprette opgave');
         console.log(error);
@@ -58,8 +61,21 @@ app.post('/api/tasks', (req, res) => {
     });
 });
 
-app.delete('/api/tasks/:id', (req, res) => {
+app.delete('/api/tasks/:id', async (req, res) => {
+    try {
+        const tasks = await readTasks();
+        const updatedTasks = tasks.filter(task => task.id !== req.params.id);
 
+        if (updatedTasks.length === tasks.length) {
+            return res.status(404).send('Opgave ikke fundet');
+        }
+
+        await fs.writeJson(taskPath, updatedTasks, { spaces: 2 });
+        res.status(200).json({ message: 'Opgave slettet' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Kunne ikke slette opgave');
+    }
 });
 
 
