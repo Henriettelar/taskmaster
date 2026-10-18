@@ -1,12 +1,1 @@
-[
-  {
-    "id": "37d637f8-9745-4960-95b6-801abb5f0c0c",
-    "text": "Få det nu fikset",
-    "status": "Backlog"
-  },
-  {
-    "id": "b6fc25c2-40b9-4fe7-a2bf-1d0b7a5fd7f4",
-    "text": "Lav denne opgave færdig",
-    "status": "Backlog"
-  }
-]
+[{"id":"37d637f8-9745-4960-95b6-801abb5f0c0c","text":"Få det nu fikset","status":"Backlog"},{"id":"b6fc25c2-40b9-4fe7-a2bf-1d0b7a5fd7f4","text":"Lav denne opgave færdig","status":"Backlog"},{"id":"5310aca9-bc0e-410f-874b-cc5f507cb389","text":"Få bedre layout","status":"Backlog"}]

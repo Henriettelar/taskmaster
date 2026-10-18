@@ -25,6 +25,8 @@ async function loadTasks(){
             status.textContent = task.status;
             deleteButton.textContent = 'Slet opgave';
 
+            status.classList.add(task.status.toLowerCase());
+
             deleteButton.addEventListener("click", () => {
                 deleteTask(task.id);
             });

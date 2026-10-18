@@ -1,0 +1,167 @@
+
+/* Grundlæggende styling */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 40px 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f3f7f2;
+    color: #17251b;
+}
+
+/* Overskrift */
+h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #174d32;
+    margin-bottom: 35px;
+}
+
+/* Formular */
+#taskform {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    max-width: 650px;
+    margin: 0 auto 35px;
+    padding: 24px;
+    background-color: white;
+    border: 1px solid #c9dfcd;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+#taskform label {
+    width: 100%;
+    font-weight: bold;
+    color: #174d32;
+}
+
+#task {
+    flex: 1;
+    min-width: 150px;
+    padding: 12px;
+    border: 1px solid #9bbda2;
+    border-radius: 7px;
+    font-size: 1rem;
+    background-color: #fbfdfb;
+}
+
+#task:focus {
+    outline: 2px solid #398653;
+    outline-offset: 2px;
+}
+
+/* Tilføj-knap */
+#button {
+    padding: 12px 22px;
+    border: none;
+    border-radius: 7px;
+    background-color: #21683c;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#button:hover {
+    background-color: #164a2b;
+}
+
+/* Opgavelisten */
+#tasklist {
+    max-width: 650px;
+    margin: 0 auto;
+    padding: 12px 24px;
+    list-style: none;
+    background-color: white;
+    border: 1px solid #c9dfcd;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+#tasklist li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 4px;
+    border-bottom: 1px solid #e1e9e2;
+    overflow-wrap: anywhere;
+}
+
+#tasklist li:last-child {
+    border-bottom: none;
+}
+
+/* Sletteknapper, hvis du opretter dem med JavaScript */
+#tasklist button {
+    flex-shrink: 0;
+    padding: 7px 11px;
+    border: none;
+    border-radius: 6px;
+    background-color: #e0eee2;
+    color: #174d32;
+    cursor: pointer;
+}
+
+#tasklist button:hover {
+    background-color: #c4dfca;
+}
+
+
+/* Opgavens status */
+.task-status {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+/* Opgaver, der afventer */
+.backlog {
+    background-color: #e5e7eb;
+    color: #374151;
+}
+
+/* Opgaver, der er i gang */
+.in_progress {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+/* Færdige opgaver */
+.completed {
+    background-color: #166534;
+    color: white;
+}
+
+
+
+/* Mobilvenligt design */
+@media (max-width: 480px) {
+    body {
+        padding: 25px 14px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    #taskform {
+        padding: 18px;
+    }
+
+    #button {
+        width: 100%;
+    }
+
+    #tasklist {
+        padding: 8px 16px;
+    }
+}
