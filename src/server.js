@@ -15,9 +15,9 @@ async function readTasks(){
 }
 
 async function createTask(task){
-    const tasks = await readTasks(task);
+    const tasks = await readTasks();
     tasks.push(task);
-    return await fs.writeJson(taskPath, tasks);
+    return await fs.writeJson(taskPath, tasks, { spaces: 2 });
 }
 
 app.use(express.json());
@@ -42,8 +42,8 @@ app.post('/api/tasks', async(req, res) => {
         status: false
     };
 
-    if (newTask.text === '') {
-        res.status(400).send('Indskriv venligst en opgave');
+    if (newTask.text.trim() === '') {
+        return res.status(400).send('Indskriv venligst en opgave');
     }
 
     try {
@@ -65,19 +65,20 @@ app.patch('/api/tasks/:id', async(req, res) => {
         const tasks = await readTasks();
         const updatedTask = tasks.find(task => task.id === req.params.id);
 
-        if (updatedTask.id === undefined) {
+        if (!updatedTask) {
             return res.status(404).send('Opgave ikke fundet');
         }
 
         updatedTask.status = !updatedTask.status;
 
-        await fs.writeJson(taskPath, tasks);
+        await fs.writeJson(taskPath, tasks, { spaces: 2 });
         res.json({
             message: 'Opgave status opdateret',
             task: updatedTask
         });
 
     } catch (error){
+        res.status(500).send('Kunne ikke opdatere opgave');
         console.log(error);
     }
 });

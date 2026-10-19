@@ -4,7 +4,7 @@ const tasklist = document.getElementById("tasklist");
 const taskform = document.getElementById("taskform");
 
 function checkStatus(task){
-    if (task.status === true){
+    if (task.status){
         return 'Færdig'
     } else {
         return 'Ikke færdig'
