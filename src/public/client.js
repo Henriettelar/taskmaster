@@ -27,22 +27,32 @@ async function loadTasks(){
         tasks.forEach(task => {
             const li = document.createElement("li");
             const text = document.createElement("span");
-            const status = document.createElement("span");
+            const status = document.createElement("button");
             const deleteButton = document.createElement("button");
 
+            text.classList.add("task-text");
             text.textContent = task.text;
 
             const taskStatus = checkStatus(task);
             status.textContent = taskStatus;
+            status.classList.add("status-button");
+
+            status.classList.add(task.status ? "status-done" : "status-pending");
 
 
             deleteButton.textContent = 'Slet opgave';
+            deleteButton.classList.add("delete-button");
 
-            status.classList.add(task.status.toLowerCase());
+            status.addEventListener("click", () => {
+                changeStatus(task.id);
+            })
 
             deleteButton.addEventListener("click", () => {
                 deleteTask(task.id);
             });
+
+
+
 
             li.append(text, status, deleteButton);
             tasklist.appendChild(li);
@@ -94,6 +104,25 @@ async function deleteTask(id){
         console.log(error);
     }
 }
+
+
+async function changeStatus(id){
+    try {
+        const response = await fetch(`/api/tasks/${id}`,
+            {method: 'PATCH'});
+
+        if (!response.ok) {
+            throw new Error('Kunne ikke opdatere status');
+        }
+
+        await loadTasks();
+
+    } catch (error){
+        console.log(error);
+    }
+}
+
+
 
 taskform.addEventListener("submit", (event) =>{
     event.preventDefault();

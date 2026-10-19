@@ -9,8 +9,6 @@ const path = require('path');
 
 const taskPath = path.join(__dirname, './data/tasks.json');
 
-const status = require('./data/status.js');
-
 
 async function readTasks(){
     return await fs.readJson(taskPath);
@@ -62,19 +60,18 @@ app.post('/api/tasks', async(req, res) => {
 });
 
 
-app.patch('/api/tasks/:taskId', async(req, res) => {
+app.patch('/api/tasks/:id', async(req, res) => {
     try {
         const tasks = await readTasks();
         const updatedTask = tasks.find(task => task.id === req.params.id);
 
-        if (updatedTask.id === null) {
+        if (updatedTask.id === undefined) {
             return res.status(404).send('Opgave ikke fundet');
         }
 
-
         updatedTask.status = !updatedTask.status;
 
-        await createTask(updatedTask);
+        await fs.writeJson(taskPath, tasks);
         res.json({
             message: 'Opgave status opdateret',
             task: updatedTask

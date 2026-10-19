@@ -1,5 +1,8 @@
 
-/* Grundlæggende styling */
+/* =========================
+   Grundlæggende styling
+========================= */
+
 * {
     box-sizing: border-box;
 }
@@ -12,7 +15,10 @@ body {
     color: #17251b;
 }
 
-/* Overskrift */
+/* =========================
+   Overskrift
+========================= */
+
 h1 {
     text-align: center;
     font-size: 2.5rem;
@@ -20,15 +26,18 @@ h1 {
     margin-bottom: 35px;
 }
 
-/* Formular */
+/* =========================
+   Formular
+========================= */
+
 #taskform {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
-    max-width: 650px;
+    max-width: 750px;
     margin: 0 auto 35px;
     padding: 24px;
-    background-color: white;
+    background-color: #ffffff;
     border: 1px solid #c9dfcd;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
@@ -48,6 +57,7 @@ h1 {
     border-radius: 7px;
     font-size: 1rem;
     background-color: #fbfdfb;
+    color: #17251b;
 }
 
 #task:focus {
@@ -56,12 +66,13 @@ h1 {
 }
 
 /* Tilføj-knap */
+
 #button {
     padding: 12px 22px;
     border: none;
     border-radius: 7px;
     background-color: #21683c;
-    color: white;
+    color: #ffffff;
     font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
@@ -72,79 +83,118 @@ h1 {
     background-color: #164a2b;
 }
 
-/* Opgavelisten */
+/* =========================
+   Opgavelisten
+========================= */
+
 #tasklist {
-    max-width: 650px;
+    max-width: 750px;
     margin: 0 auto;
-    padding: 12px 24px;
+    padding: 8px 24px;
     list-style: none;
-    background-color: white;
+    background-color: #ffffff;
     border: 1px solid #c9dfcd;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 #tasklist li {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+
+    /* Tekst | Status | Slet */
+    grid-template-columns: minmax(0, 1fr) 140px 120px;
+
     align-items: center;
     gap: 12px;
-    padding: 16px 4px;
+    padding: 16px 0;
     border-bottom: 1px solid #e1e9e2;
-    overflow-wrap: anywhere;
 }
 
 #tasklist li:last-child {
     border-bottom: none;
 }
 
-/* Sletteknapper, hvis du opretter dem med JavaScript */
+/* Opgaveteksten */
+
+.task-text {
+    min-width: 0;
+    color: #17251b;
+    overflow-wrap: anywhere;
+}
+
+/* =========================
+   Fælles knapdesign
+========================= */
+
 #tasklist button {
-    flex-shrink: 0;
-    padding: 7px 11px;
+    width: 100%;
+    min-height: 38px;
+    padding: 9px 10px;
     border: none;
-    border-radius: 6px;
-    background-color: #e0eee2;
-    color: #174d32;
+    border-radius: 7px;
+    font-size: 0.85rem;
+    font-weight: bold;
     cursor: pointer;
+    transition:
+            background-color 0.2s ease,
+            transform 0.15s ease;
 }
 
 #tasklist button:hover {
-    background-color: #c4dfca;
+    transform: translateY(-1px);
 }
 
-
-/* Opgavens status */
-.task-status {
-    padding: 5px 10px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: bold;
-    white-space: nowrap;
+#tasklist button:focus-visible {
+    outline: 2px solid #174d32;
+    outline-offset: 3px;
 }
 
-/* Opgaver, der afventer */
-.backlog {
-    background-color: #e5e7eb;
-    color: #374151;
-}
+/* =========================
+   Statusknap: færdig
+   task.status === true
+========================= */
 
-/* Opgaver, der er i gang */
-.in_progress {
+.status-button.status-done {
     background-color: #d1fae5;
-    color: #065f46;
+    color: #166534;
 }
 
-/* Færdige opgaver */
-.completed {
-    background-color: #166534;
-    color: white;
+.status-button.status-done:hover {
+    background-color: #a7f3d0;
 }
 
+/* =========================
+   Statusknap: ikke færdig
+   task.status === false
+========================= */
 
+.status-button.status-pending {
+    background-color: #ffedd5;
+    color: #9a3412;
+}
 
-/* Mobilvenligt design */
-@media (max-width: 480px) {
+.status-button.status-pending:hover {
+    background-color: #fed7aa;
+}
+
+/* =========================
+   Sletteknap
+========================= */
+
+#tasklist button.delete-button {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+
+#tasklist button.delete-button:hover {
+    background-color: #fecaca;
+}
+
+/* =========================
+   Mobilvenligt design
+========================= */
+
+@media (max-width: 520px) {
     body {
         padding: 25px 14px;
     }
@@ -162,6 +212,20 @@ h1 {
     }
 
     #tasklist {
-        padding: 8px 16px;
+        padding: 8px 14px;
+    }
+
+    #tasklist li {
+        grid-template-columns: minmax(0, 1fr) 105px;
+        gap: 8px;
+    }
+
+    .task-text {
+        grid-column: 1 / -1;
+    }
+
+    #tasklist button {
+        padding: 9px 6px;
+        font-size: 0.8rem;
     }
 }
