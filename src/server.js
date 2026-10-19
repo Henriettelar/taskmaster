@@ -41,7 +41,7 @@ app.post('/api/tasks', async(req, res) => {
     const newTask = {
         id: crypto.randomUUID(),
         text: req.body.text,
-        status: status.BACKLOG
+        status: false
     };
 
     if (newTask.text === '') {
@@ -60,6 +60,32 @@ app.post('/api/tasks', async(req, res) => {
         task: newTask
     });
 });
+
+
+app.patch('/api/tasks/:taskId', async(req, res) => {
+    try {
+        const tasks = await readTasks();
+        const updatedTask = tasks.find(task => task.id === req.params.id);
+
+        if (updatedTask.id === null) {
+            return res.status(404).send('Opgave ikke fundet');
+        }
+
+
+        updatedTask.status = !updatedTask.status;
+
+        await createTask(updatedTask);
+        res.json({
+            message: 'Opgave status opdateret',
+            task: updatedTask
+        });
+
+    } catch (error){
+        console.log(error);
+    }
+});
+
+
 
 app.delete('/api/tasks/:id', async (req, res) => {
     try {

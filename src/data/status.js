@@ -1,9 +1,9 @@
 const status = Object.freeze({
-    BACKLOG: 'Backlog',
-    INPROGRESS: 'InProgress',
-    REVIEW: 'Review',
-    DONE: 'Done'
+    true: 'Færdig',
+    false: 'Ikke-færdig'
 });
+
+const statusNew = true;
 
 
 module.exports = status;

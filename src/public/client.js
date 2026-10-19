@@ -3,6 +3,15 @@ const button = document.getElementById("button");
 const tasklist = document.getElementById("tasklist");
 const taskform = document.getElementById("taskform");
 
+function checkStatus(task){
+    if (task.status === true){
+        return 'Færdig'
+    } else {
+        return 'Ikke færdig'
+    }
+}
+
+
 async function loadTasks(){
     try {
         const response = await fetch('/api/tasks');
@@ -22,7 +31,11 @@ async function loadTasks(){
             const deleteButton = document.createElement("button");
 
             text.textContent = task.text;
-            status.textContent = task.status;
+
+            const taskStatus = checkStatus(task);
+            status.textContent = taskStatus;
+
+
             deleteButton.textContent = 'Slet opgave';
 
             status.classList.add(task.status.toLowerCase());
